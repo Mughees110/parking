@@ -1,6 +1,4 @@
 <?php
-
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Company;
 use Illuminate\Http\Request;
