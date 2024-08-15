@@ -35,11 +35,11 @@ class SpaceController extends Controller
             $space=new Space;
             $space->latitude=$request->json('latitude');
             $space->longitude=$request->json('longitude');
-            $story->userId=$request->json('userId');
-            $story->address=$request->json('address');
-            $story->time=$request->json('time');
-            $story->date=$request->json('date');
-            $story->save();
+            $space->userId=$request->json('userId');
+            $space->address=$request->json('address');
+            $space->time=$request->json('time');
+            $space->date=$request->json('date');
+            $space->save();
             DB::commit();
 
             return response()->json(['status'=>200,'data'=>$space,'message'=>'Stored successfully']);
