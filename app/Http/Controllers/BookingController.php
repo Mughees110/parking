@@ -43,4 +43,20 @@ class BookingController extends Controller
             ], 422);
         }
     }
+    public function getBookings(Request $request){
+    	$bookings = Booking::all();
+    	foreach ($bookings as $key => $value) {
+    		$value->setAttribute('user',User::find($value->userId));
+    		$value->setAttribute('space',Space::find($value->spaceId));
+    	}
+    	return response()->json(['status'=>200,'data'=>$bookings]);
+    }
+    public function getMyBookings(Request $request){
+    	$bookings = Booking::where('userId',$request->json('userId'))->get();
+    	foreach ($bookings as $key => $value) {
+    		$value->setAttribute('user',User::find($value->userId));
+    		$value->setAttribute('space',Space::find($value->spaceId));
+    	}
+    	return response()->json(['status'=>200,'data'=>$bookings]);
+    }
 }

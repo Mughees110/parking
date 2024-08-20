@@ -37,6 +37,8 @@ Route::middleware('auth:sanctum')->group(function () {
 	Route::post('spaces-delete/{id}','App\Http\Controllers\SpaceController@destroy');
 
 	Route::post('book-space','App\Http\Controllers\BookingController@bookSpace');
+	Route::post('get-bookings','App\Http\Controllers\BookingController@getBookings');
+	Route::post('get-my-bookings','App\Http\Controllers\BookingController@getMyBookings');
 
 	Route::post('make-favourite','App\Http\Controllers\FavouriteController@makeFavourite');
 	Route::post('get-my-favourite-spaces','App\Http\Controllers\FavouriteController@getMyFavouriteSpaces');
