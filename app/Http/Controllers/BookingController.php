@@ -17,7 +17,10 @@ class BookingController extends Controller
     		return response()->json(['status'=>401,'message'=>'userId and spaceId are required']);
     	}
     	try {
-            
+            $exists=Booking::where('spaceId',$request->json('spaceId'))->exists();
+            if($exists==true){
+            	return response()->json(['status'=>401,'message'=>'already booked']);
+            }
             
             DB::beginTransaction();
             
