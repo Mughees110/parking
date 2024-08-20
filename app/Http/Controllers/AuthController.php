@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Company;
+use App\Models\Referal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -34,6 +35,7 @@ class AuthController extends Controller
             $user->email=$request->json('email');
             $user->password=Hash::make($request->json('password'));
             $user->role=$request->json('role');
+            $user->code=time();
             $user->save();
             $token = $user->createToken('auth_token')->plainTextToken;
 
@@ -164,6 +166,28 @@ class AuthController extends Controller
                 'message' => 'Unable to change password'.$e->getMessage(),
             ], 422);
         }
+    }
+    public function referal(Request $request){
+        if(empty($request->json('userId'))||empty($request->json('code'))){
+            return response()->json(['status'=>401,'message'=>'userId code are required']);
+        }
+        $user=User::where('code',$request->json('code'))->first();
+        if(!$user){
+            return response()->json(['status'=>401,'message'=>'code does not belong to any user']);
+        }
+        $exists=Referal::where('userId',$request->json('userId'))->where('referedById',$user->id)->exists();
+        if($exists==true){
+            return response()->json(['status'=>401,'message'=>'code already used by this user']);
+        }
+        DB::beginTransaction();
+        $referal=new Referal;
+        $referal->userId=$request->json('userId');
+        $referal->referedById=$user->id;
+        $referal->save();
+        $user->balance=$user->balance+10;
+        $user->save();
+        DB::commit();
+        return response()->json(['status'=>200,'message'=>'success']);
     }
     
 }

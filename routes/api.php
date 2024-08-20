@@ -28,11 +28,24 @@ Route::get('invalid',function(){
 Route::middleware('auth:sanctum')->group(function () {
 
 	Route::post('update','App\Http\Controllers\AuthController@update');
+	Route::post('referal','App\Http\Controllers\AuthController@referal');
 
 	Route::post('spaces','App\Http\Controllers\SpaceController@index');
 	Route::post('spaces-of-user','App\Http\Controllers\SpaceController@index2');
 	Route::post('spaces-store','App\Http\Controllers\SpaceController@store');
 	Route::post('spaces-update/{id}','App\Http\Controllers\SpaceController@update');
 	Route::post('spaces-delete/{id}','App\Http\Controllers\SpaceController@destroy');
+
+	Route::post('book-space','App\Http\Controllers\BookingController@bookSpace');
+
+	Route::post('make-favourite','App\Http\Controllers\FavouriteController@makeFavourite');
+	Route::post('get-my-favourite-spaces','App\Http\Controllers\FavouriteController@getMyFavouriteSpaces');
+
+	Route::post('withdraw-request','App\Http\Controllers\WithdrawController@withdrawRequest');
+	Route::post('get-withdraw-requests','App\Http\Controllers\WithdrawController@getWithdrawRequests');
+	Route::post('get-my-withdraw-requests','App\Http\Controllers\WithdrawController@getMyWithdrawRequests');
+	Route::post('change-withdraw-status','App\Http\Controllers\WithdrawController@changeWithdrawStatus');
+
+	Route::post('get-secret','App\Http\Controllers\ApiController@getSecret');
 	
 });
