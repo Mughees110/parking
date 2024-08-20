@@ -15,7 +15,7 @@ class WithdrawController extends Controller
     	if(!$user){
     		return response()->json(['status'=>401,'message'=>'user not found']);
     	}
-    	if($user->balance<$request->json('amount')){
+    	if($user->balance<(int)$request->json('amount')){
     		return response()->json(['status'=>401,'message'=>'amount not enough to withdraw']);
     	}
     	$with=new Withdraw;
